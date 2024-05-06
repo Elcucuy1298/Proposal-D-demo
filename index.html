@@ -63,7 +63,7 @@
             <label for="contact">Contact Number:</label>
             <input type="text" id="contact" name="contact" required>
 
-            <input type="submit" value="Submit" onclick="validateId(); return false;">
+            <input type="submit" value="Submit" onclick="validateForm(); return false;">
         </form>
 
         <!-- Output image -->
@@ -71,27 +71,44 @@
     </div>
 
     <script>
-        function validateId() {
+        function validateForm() {
             var id = document.getElementById("id").value;
+            var contact = document.getElementById("contact").value;
 
-            // Check if the ID starts with "TUPC"
-            if (!id.startsWith("TUPC")) {
-                alert("Invalid user ID.");
+            // Validate ID
+            if (!validateId(id)) {
                 return false;
             }
 
-            // If ID is valid, proceed to show image
+            // Validate Contact Number
+            if (!validateContact(contact)) {
+                return false;
+            }
+
+            // If everything is valid, proceed to show image
             showImage();
+        }
+
+        function validateId(id) {
+            // Check if the ID starts with "TUPC" and follows the format "TUPC-##-####"
+            if (!id.match(/^TUPC-\d{2}-\d{4}$/)) {
+                alert("Invalid user ID. Please follow the format: TUPC-##-####");
+                return false;
+            }
+            return true;
+        }
+
+        function validateContact(contact) {
+            // Check if the contact number starts with "09" and is 11 digits long
+            if (!contact.match(/^09\d{9}$/)) {
+                alert("Invalid contact number. Please start with '09' and ensure it is 11 digits long.");
+                return false;
+            }
+            return true;
         }
 
         function showImage() {
             var name = document.getElementById("name").value;
-            var contact = document.getElementById("contact").value;
-
-            if (name === "" || contact === "") {
-                alert("Please fill out all fields.");
-                return false;
-            }
 
             // Show the image
             document.getElementById("outputImage").style.display = "block";
