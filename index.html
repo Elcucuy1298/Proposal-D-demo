@@ -47,6 +47,11 @@
             margin: 20px auto;
             max-width: 100%;
             height: auto;
+            position: absolute;
+            top: 20%; /* Adjust the top position */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
         }
         /* Style for terms and agreement pop-up */
         #termsPopup {
@@ -59,7 +64,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            z-index: 9999;
+            z-index: 3;
         }
         #termsPopup h3 {
             text-align: center;
@@ -103,7 +108,7 @@
         <div id="termsPopup">
             <h3>Terms and Agreement</h3>
             <p>By clicking submit, you agree that all the information provided is accurate.</p>
-            <button onclick="submitForm()">Agree and Submit</button>
+            <button onclick="agreeAndShowImage()">Agree and Submit</button>
         </div>
 
         <!-- Output image -->
@@ -141,3 +146,25 @@
 
         function validateContact(contact) {
             // Check if the contact number starts with "09" and is 11 digits long
+            if (!contact.match(/^09\d{9}$/)) {
+                alert("Invalid contact number. Please start with '09' and ensure it is 11 digits long.");
+                return false;
+            }
+            return true;
+        }
+
+        function showTermsAndAgreement() {
+            // Display the terms and agreement pop-up
+            document.getElementById("termsPopup").style.display = "block";
+        }
+
+        function agreeAndShowImage() {
+            // Hide the terms and agreement pop-up
+            document.getElementById("termsPopup").style.display = "none";
+
+            // Show the QR code image
+            document.getElementById("outputImage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
